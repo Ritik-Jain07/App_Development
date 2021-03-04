@@ -7,6 +7,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -16,7 +17,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
-class Signup_information : AppCompatActivity() {
+class HomePage : AppCompatActivity() {
 
     private val camera = 1000
     @RequiresApi(Build.VERSION_CODES.M)
@@ -43,16 +44,19 @@ class Signup_information : AppCompatActivity() {
         val permission_button = findViewById<Button>(R.id.Permission)
         val url_link = findViewById<EditText>(R.id.URL)
 
-        url_button.setOnClickListener(View.OnClickListener{
+        url_button.setOnClickListener(View.OnClickListener {
             if (url_link.text.toString().isBlank()) {
                 url_link.error = "Enter url"
-            }
-            else{
+            } else {
                 val url: String = url_link.text.toString()
-                val i = Intent(Intent.ACTION_VIEW)
-                i.setData(Uri.parse(url))
-                startActivity(i)
-
+                if (Patterns.WEB_URL.matcher(url).matches()) {
+                    val i = Intent(Intent.ACTION_VIEW)
+                    i.setData(Uri.parse(url))
+                    startActivity(i)
+                }
+                else{
+                    Toast.makeText(this,"Invalid URL",Toast.LENGTH_SHORT).show()
+                }
             }
         })
 
@@ -71,7 +75,19 @@ class Signup_information : AppCompatActivity() {
         }
         )
 
-
+        fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+            when (requestCode) {
+                camera -> {
+                    if (grantResults.isEmpty() || (grantResults[0] != PackageManager.PERMISSION_GRANTED)) {
+                        Log.i("TAG", "Permission has been denied by user")
+                        Toast.makeText(this, "Permission denied by user", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Log.i("TAG", "Permission has been granted by user")
+                        Toast.makeText(this, "Permission granted by user", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
 
     }
 }

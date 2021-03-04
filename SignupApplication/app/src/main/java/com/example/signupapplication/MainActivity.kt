@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
             else if(password.text.toString().isBlank()){
                 password.error = "Please enter name"
             }else {
-                val intent = Intent(this@MainActivity, Signup_information::class.java)
+                val intent = Intent(this@MainActivity, HomePage::class.java)
                 intent.putExtra("name", name.text.toString())
                 intent.putExtra("email", email.text.toString())
                 intent.putExtra("phone", phone.text.toString())
