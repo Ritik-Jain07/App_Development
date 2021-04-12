@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Dummy</string>
+    <string name="main_info"><![CDATA[Send notification from Firebase Cloud Messaging with Custom Data Key and Value]]></string>
+    <string name="default_notification_channel_id">firebase_notification_channel</string>
+    <string name="channel_name">DummyApp channel</string>
+</resources>
